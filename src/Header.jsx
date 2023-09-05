@@ -12,9 +12,33 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
+import { Routes, Route, Link } from 'react-router-dom';
+import Home from './Routes/HomePage/Home';
+import { About } from './Routes/AboutPage/About';
 
-const pages = ['Products', 'Pricing', 'Blog'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const pages = [
+  {
+    id: 1,
+    route: '/about',
+    name: 'Про нас',
+  },
+  {
+    id: 2,
+    route: '/contacts',
+    name: 'Контакти',
+  },
+  {
+    id: 3,
+    route: '/consultation',
+    name: 'Консультації',
+  },
+  {
+    id: 4,
+    route: '/courses',
+    name: 'Курси',
+  }
+];
+const settings = ['Профіль', 'Особистий кабінет', 'Логін'];
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -36,9 +60,9 @@ function ResponsiveAppBar() {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" zIndex={100} >
       <Container maxWidth="xl">
-        <Toolbar disableGutters>
+        <Toolbar disableGutters zIndex={100}>
           <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
           <Typography
             variant="h6"
@@ -88,8 +112,9 @@ function ResponsiveAppBar() {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+                <MenuItem key={page.id} onClick={handleCloseNavMenu}>
+                  <Link href={page.route} textAlign="center">{page.name}</Link>
+                  
                 </MenuItem>
               ))}
             </Menu>
@@ -116,11 +141,12 @@ function ResponsiveAppBar() {
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
-                key={page}
+                key={page.id}
+                href={page.route}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
-                {page}
+                {page.name}
               </Button>
             ))}
           </Box>
@@ -156,7 +182,9 @@ function ResponsiveAppBar() {
           </Box>
         </Toolbar>
       </Container>
+      
     </AppBar>
+    
   );
 }
 export default ResponsiveAppBar;

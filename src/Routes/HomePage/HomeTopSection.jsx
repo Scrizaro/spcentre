@@ -18,7 +18,16 @@ export default function HomeTopSection (){
     //     },
     //   }));
     //   const classes = useStyles();
-      
+      const imgData = [{
+        id: 1,
+        url: "https://picsum.photos/600/400",
+      },{
+        id: 2,
+        url: "https://picsum.photos/600/400",
+      },{
+        id: 3,
+        url: "https://picsum.photos/600/400",
+      }]
     return (
         <Stack direction={'column'} alignItems={'center'}>
             
