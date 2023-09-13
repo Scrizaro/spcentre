@@ -8,15 +8,28 @@ import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
+import { Provider } from 'react-redux'
+import { configureStore } from '@reduxjs/toolkit'
+import counterReducer from './features/userData/userData.js'
+import AuthProvider from './components/AuthProvider/AuthProvider';
 
+export const store = configureStore({
+  reducer: {
+    counter: counterReducer,
+  },
+})
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
+  <Provider store={store}>
+    
     <BrowserRouter>
+    <AuthProvider>
       <App />
+      </AuthProvider>
     </BrowserRouter>
-  </React.StrictMode>
+    
+  </Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function

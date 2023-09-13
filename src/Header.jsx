@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useEffect} from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -15,6 +15,10 @@ import AdbIcon from '@mui/icons-material/Adb';
 import { Routes, Route, Link } from 'react-router-dom';
 import Home from './Routes/HomePage/Home';
 import { About } from './Routes/AboutPage/About';
+import { useAuthContext } from './features/context/AuthContext';
+import { getToken, removeToken } from './helpers';
+
+
 
 const pages = [
   {
@@ -38,12 +42,36 @@ const pages = [
     name: 'Курси',
   }
 ];
-const settings = ['Профіль', 'Особистий кабінет', 'Логін'];
+
+  
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const { user } = useAuthContext();
+  const settings = [
+      {
+        id: 1, 
+        route: '/user', 
+        name: 'Особистий кабінет'},
+      ]
+      useEffect(() => {
+        if(getToken() === null){
+          settings.push({
+            id: 2,
+            route: '/signup',
+            name: 'Реєстрація',
+          },{
+            id: 3,
+            route: '/signin',
+            name: 'Увійти',
+          })
+        }
+      },[getToken, settings])
+      
 
+  console.log(settings)
+  console.log(user, 'user')
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -60,9 +88,9 @@ function ResponsiveAppBar() {
   };
 
   return (
-    <AppBar position="static" zIndex={100} >
+    <AppBar position="static" >
       <Container maxWidth="xl">
-        <Toolbar disableGutters zIndex={100}>
+        <Toolbar disableGutters >
           <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
           <Typography
             variant="h6"
@@ -113,7 +141,7 @@ function ResponsiveAppBar() {
             >
               {pages.map((page) => (
                 <MenuItem key={page.id} onClick={handleCloseNavMenu}>
-                  <Link href={page.route} textAlign="center">{page.name}</Link>
+                  <Link href={page.route} textalign="center">{page.name}</Link>
                   
                 </MenuItem>
               ))}
@@ -174,8 +202,9 @@ function ResponsiveAppBar() {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+                <MenuItem key={setting.id} onClick={handleCloseUserMenu}>
+                  {getToken() !== null  ? <Link onClick={setting.route} textalign="center">{setting.name}</Link> :
+                  <Link href={setting.route} textalign="center">{setting.name}</Link>}
                 </MenuItem>
               ))}
             </Menu>
