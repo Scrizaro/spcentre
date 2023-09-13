@@ -17,8 +17,6 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { Stack } from '@mui/system';
-import zIndex from '@mui/material/styles/zIndex';
-
 const drawerWidth = 240;
 
 function UserPageContent(props) {
@@ -30,7 +28,7 @@ function UserPageContent(props) {
   };
   
   const drawer = (
-    <div zIndex={10}>
+    <div >
       <Toolbar  sx={{mt: '10px'}} />
       <Divider />
       <List>
@@ -115,7 +113,7 @@ function UserPageContent(props) {
           variant="permanent"
           sx={{
             display: { xs: 'none', sm: 'inline-block' },
-            zIndex: 4,
+            zindex: 4,
             '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
           }}
           open
